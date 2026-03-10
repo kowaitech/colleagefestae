@@ -1337,13 +1337,96 @@ footer {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: #4d0000; }
+
+/* ===== CINEMATIC UI REFRESH (ActiveTheory inspired) ===== */
+:root {
+  --neo-bg: #05070d;
+  --neo-panel: rgba(11, 17, 30, 0.62);
+  --neo-stroke: rgba(122, 162, 255, 0.22);
+  --neo-glow: rgba(107, 139, 255, 0.45);
+}
+
+body {
+  background: radial-gradient(circle at 50% -10%, #17203a 0%, var(--neo-bg) 55%, #020308 100%);
+  font-family: "Cinzel Decorative", serif;
+  cursor: none;
+}
+
+.aurora-layer {
+  position: fixed; inset: -20%; z-index: -4; pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(70,120,255,0.22), transparent 42%),
+    radial-gradient(circle at 80% 24%, rgba(225,70,255,0.16), transparent 40%),
+    radial-gradient(circle at 48% 70%, rgba(30,220,255,0.12), transparent 48%);
+  filter: blur(28px) saturate(1.4);
+  animation: auroraDrift 16s ease-in-out infinite alternate;
+}
+@keyframes auroraDrift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to { transform: translate3d(2%, 2%, 0) scale(1.08); }
+}
+
+nav {
+  background: linear-gradient(120deg, rgba(7,12,25,0.72), rgba(8,16,34,0.45));
+  border-bottom: 1px solid var(--neo-stroke);
+  backdrop-filter: blur(14px);
+}
+
+.nav-logo, .sristi-main-title { letter-spacing: 0.22em; }
+.home-hero {
+  background: linear-gradient(145deg, rgba(9,16,31,0.66), rgba(7,9,18,0.44));
+  border: 1px solid var(--neo-stroke);
+  box-shadow: 0 20px 80px rgba(0,0,0,.45), inset 0 0 60px rgba(90,120,255,0.06);
+  backdrop-filter: blur(8px);
+}
+
+.subtitle-line {
+  color: #c7d5ff;
+  text-shadow: 0 0 30px rgba(95, 125, 255, 0.24);
+}
+
+.dept-card, .info-card, .event-card, .about-card {
+  background: var(--neo-panel);
+  border: 1px solid var(--neo-stroke);
+  box-shadow: 0 10px 32px rgba(0,0,0,.35);
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+.dept-card:hover, .info-card:hover, .event-card:hover, .about-card:hover {
+  transform: translateY(-10px) scale(1.01);
+  border-color: rgba(132, 172, 255, 0.6);
+  box-shadow: 0 16px 42px rgba(20, 70, 190, 0.22), 0 0 0 1px rgba(161,190,255,0.2);
+}
+
+#chat-toggle, #ai-chatbox {
+  border: 1px solid var(--neo-stroke);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.44);
+}
+
+.neo-scroll-line {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 2000;
+  background: linear-gradient(90deg, #74a7ff, #b886ff, #7af6ff);
+  box-shadow: 0 0 25px rgba(120,150,255,.8);
+}
+
+.cursor-dot, .cursor-ring {
+  position: fixed; left: 0; top: 0; pointer-events: none; z-index: 3000; mix-blend-mode: screen;
+}
+.cursor-dot { width: 8px; height: 8px; border-radius: 50%; background: #9cb7ff; transform: translate(-50%, -50%); }
+.cursor-ring { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(156,183,255,0.55); transform: translate(-50%, -50%); transition: width .25s, height .25s, border-color .25s; }
+a:hover ~ .cursor-ring, button:hover ~ .cursor-ring { border-color: rgba(210,120,255,.8); }
+
+@media (max-width: 900px) {
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
 </style>
 </head>
 <body>
 
 <!-- HIDDEN AUDIO: Death Note style ambient -->
 <audio id="bg-audio" loop autoplay>
-  <source src="C:\Users\tharu\Niviro - The Ghost _Scary Song (Lyrics)(MP3_160K).mp3" type="audio/mpeg">
+  <!-- Optional local soundtrack source can be added here -->
 </audio>
 
 <!-- GHOST LOADER -->
@@ -1599,6 +1682,10 @@ footer {
 
 <!-- PARTICLES -->
 <div class="particles-layer" id="particles"></div>
+<div class="aurora-layer"></div>
+<div class="neo-scroll-line" id="neo-scroll-line"></div>
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
 
 <!-- NAVIGATION -->
 <nav>
@@ -1666,7 +1753,7 @@ footer {
           <div class="dept-bg phantom-bg"></div>
           <div class="dept-card-inner">
             <div class="dept-ghost-wrap">
-              <img class="dept-ghost-img" src="C:\Users\tharu\Downloads\vecteezy_ai-generated-a-close-up-of-a-scary-ghost-ai-generated_35993210.png" alt="Ghost">
+              <img class="dept-ghost-img" src="vecteezy_ai-generated-a-close-up-of-a-scary-ghost-ai-generated_35993210.png" alt="Ghost">
             </div>
             <div class="dept-name phantom-name">PHANTOM</div>
             <div class="dept-full">Department of Information Technology</div>
@@ -1680,7 +1767,7 @@ footer {
           <div class="dept-bg haint-bg"></div>
           <div class="dept-card-inner">
             <div class="dept-ghost-wrap">
-              <img class="dept-ghost-img" src="C:\Users\tharu\Downloads\aids-removebg-preview.png" alt="ghost">
+              <img class="dept-ghost-img" src="aids-removebg-preview.png" alt="ghost">
             </div>
             <div class="dept-name haint-name">HAINT</div>
             <div class="dept-full">Dept. of Artificial Intelligence & Data Science</div>
@@ -1720,7 +1807,7 @@ footer {
           
           <div class="qr-box">
             <div class="qr-wrap">
-              <img src="C:\Users\tharu\OneDrive\Desktop\harrypotter\location qr.jpeg" alt="Location QR">
+              <img src="location qr.jpeg" alt="Location QR">
             </div>
             <div class="qr-label">📍 Location</div>
           </div>
@@ -1752,13 +1839,13 @@ footer {
     
     <div class="events-chooser">
       <div class="choose-btn" onclick="goPage('phantom')">
-        <img class="choose-btn-img" src="C:\Users\tharu\Downloads\vecteezy_ai-generated-a-close-up-of-a-scary-ghost-ai-generated_35993210.png" alt="Phantom">
+        <img class="choose-btn-img" src="vecteezy_ai-generated-a-close-up-of-a-scary-ghost-ai-generated_35993210.png" alt="Phantom">
         <div class="choose-btn-name" style="color:var(--moonlight);">PHANTOM</div>
         <div class="choose-btn-sub">Information Technology · IT Dept</div>
         <div style="font-family:'Creepster',cursive;font-size:0.7rem;color:#223344;letter-spacing:2px;margin-top:8px;">PAPER PRESENTATION · TECHWHIZ · BLINDRIX</div>
       </div>
       <div class="choose-btn" onclick="goPage('haint')">
-        <img class="choose-btn-img" src="C:\Users\tharu\Downloads\aids-removebg-preview.png" alt="Haint">
+        <img class="choose-btn-img" src="aids-removebg-preview.png" alt="Haint">
         <div class="choose-btn-name" style="color:#cc4422;">HAINT GHOST</div>
         <div class="choose-btn-sub">AI & Data Science · AIDS Dept</div>
         <div style="font-family:'Creepster',cursive;font-size:0.7rem;color:#223344;letter-spacing:2px;margin-top:8px;">CYBER SQUID · TACKLE THE IDEA · MEMEZOO</div>
@@ -1777,7 +1864,7 @@ footer {
 <!-- =============================== PHANTOM / IT PAGE =============================== -->
 <div class="page" id="phantom-page">
   <div style="position:relative;">
-    <div class="page-top-bg"><img src="C:\Users\tharu\OneDrive\Documents\Attachments\haunted-house-7508035_1280.jpg" alt=""></div>
+    <div class="page-top-bg"><img src="vecteezy_ai-generated-a-close-up-of-a-scary-ghost-ai-generated_35993210.png" alt=""></div>
     <div style="padding:90px 30px 250px;max-width:1250px;margin:0 auto;position:relative;z-index:2;">
       <a class="back-btn" onclick="goPage('events')">← FLEE BACK</a>
       
@@ -1847,7 +1934,7 @@ footer {
       <!-- QR for IT -->
       <div style="text-align:center;margin-top:50px;">
         <div class="qr-box" style="display:inline-block;">
-          <div class="qr-wrap"><img src="C:\Users\tharu\OneDrive\Documents\Attachments\it qr.jpeg" alt="Register QR"></div>
+          <div class="qr-wrap"><img src="it qr.jpeg" alt="Register QR"></div>
           <div class="qr-label">SCAN TO REGISTER —ONE DAY ₹250 / Two DAY ₹450 </div>
         </div>
       </div>
@@ -1858,7 +1945,7 @@ footer {
 <!-- =============================== HAINT / AIDS PAGE =============================== -->
 <div class="page" id="haint-page">
   <div style="position:relative;">
-    <div class="page-top-bg"><img src="C:\Users\tharu\OneDrive\Documents\Attachments\fantasy-2847724__480.jpg" alt=""></div>
+    <div class="page-top-bg"><img src="aids-removebg-preview.png" alt=""></div>
     <div style="padding:90px 30px 250px;max-width:1250px;margin:0 auto;position:relative;z-index:2;">
       <a class="back-btn" onclick="goPage('events')">← FLEE BACK</a>
       
@@ -1922,7 +2009,7 @@ footer {
       <!-- QR for AIDS -->
       <div style="text-align:center;margin-top:50px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap;">
         <div class="qr-box">
-          <div class="qr-wrap"><img src="C:\Users\tharu\Downloads\My_QR_Code_1-1024.jpeg" alt="Register"></div>
+          <div class="qr-wrap"><img src="My_QR_Code_1-1024.jpeg" alt="Register"></div>
           <div class="qr-label">TO REGISTER - ONE DAY ₹250 / TWO DAYS ₹450</div>
         </div>
     
@@ -2247,6 +2334,51 @@ Speak in gothic, Death Note villain style — dramatic, dark, eloquent. Keep res
     msgs.scrollTop = msgs.scrollHeight;
   }
 }
+
+
+// ===== CINEMATIC INTERACTIONS =====
+const scrollLine = document.getElementById("neo-scroll-line");
+window.addEventListener("scroll", () => {
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const percent = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+  scrollLine.style.width = `${percent}%`;
+});
+
+const cursorDot = document.getElementById("cursor-dot");
+const cursorRing = document.getElementById("cursor-ring");
+let ringX = window.innerWidth / 2;
+let ringY = window.innerHeight / 2;
+let mouseX = ringX;
+let mouseY = ringY;
+
+window.addEventListener("mousemove", (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorDot.style.left = `${mouseX}px`;
+  cursorDot.style.top = `${mouseY}px`;
+});
+
+(function animateRing() {
+  ringX += (mouseX - ringX) * 0.18;
+  ringY += (mouseY - ringY) * 0.18;
+  cursorRing.style.left = `${ringX}px`;
+  cursorRing.style.top = `${ringY}px`;
+  requestAnimationFrame(animateRing);
+})();
+
+document.querySelectorAll("a, button, .dept-card, .event-card, .info-card").forEach((el) => {
+  el.addEventListener("mouseenter", () => {
+    cursorRing.style.width = "54px";
+    cursorRing.style.height = "54px";
+    cursorRing.style.borderColor = "rgba(210,120,255,.82)";
+  });
+  el.addEventListener("mouseleave", () => {
+    cursorRing.style.width = "36px";
+    cursorRing.style.height = "36px";
+    cursorRing.style.borderColor = "rgba(156,183,255,0.55)";
+  });
+});
+
 </script>
 </body>
 </html>
